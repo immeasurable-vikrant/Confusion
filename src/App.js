@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import { Navbar, NavbarBrand } from 'reactstrap';
 import Menu from './components/MenuComponent';
 import './App.css';
@@ -14,6 +15,14 @@ class App extends Component {
     };
 
   }
+=======
+import logo from './logo.svg';
+import { Navbar, NavbarBrand } from 'reactstrap';
+import Menu from './components/MenuComponent';
+import './App.css';
+
+class App extends Component {
+>>>>>>> origin/master
   render() {
     return (
       <div>
@@ -22,7 +31,11 @@ class App extends Component {
             <NavbarBrand href="/">Ristorante Con Fusion</NavbarBrand>
           </div>
         </Navbar>
+<<<<<<< HEAD
         <Menu dishes={this.state.dishes}/>
+=======
+        <Menu />
+>>>>>>> origin/master
       </div>
     );
   }
