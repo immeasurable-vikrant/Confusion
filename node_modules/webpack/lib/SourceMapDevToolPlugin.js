@@ -13,8 +13,6 @@ const createHash = require("./util/createHash");
 const validateOptions = require("schema-utils");
 const schema = require("../schemas/plugins/SourceMapDevToolPlugin.json");
 
-/** @typedef {import("../declarations/plugins/SourceMapDevToolPlugin").SourceMapDevToolPluginOptions} SourceMapDevToolPluginOptions */
-
 const basename = name => {
 	if (!name.includes("/")) return name;
 	return name.substr(name.lastIndexOf("/") + 1);
@@ -54,9 +52,6 @@ const getTaskForFile = (file, chunk, options, compilation) => {
 };
 
 class SourceMapDevToolPlugin {
-	/**
-	 * @param {SourceMapDevToolPluginOptions=} options options object
-	 */
 	constructor(options) {
 		if (arguments.length > 1) {
 			throw new Error(
@@ -64,12 +59,10 @@ class SourceMapDevToolPlugin {
 			);
 		}
 
+		validateOptions(schema, options || {}, "SourceMap DevTool Plugin");
+
 		if (!options) options = {};
-
-		validateOptions(schema, options, "SourceMap DevTool Plugin");
-
 		this.sourceMapFilename = options.filename;
-		/** @type {string | false} */
 		this.sourceMappingURLComment =
 			options.append === false
 				? false
@@ -234,7 +227,6 @@ class SourceMapDevToolPlugin {
 						sourceMap.sourceRoot = options.sourceRoot || "";
 						sourceMap.file = file;
 						assetsCache.set(asset, { file, assets });
-						/** @type {string | false} */
 						let currentSourceMappingURLComment = sourceMappingURLComment;
 						if (
 							currentSourceMappingURLComment !== false &&
@@ -284,11 +276,6 @@ class SourceMapDevToolPlugin {
 							] = new RawSource(sourceMapString);
 							chunk.files.push(sourceMapFile);
 						} else {
-							if (currentSourceMappingURLComment === false) {
-								throw new Error(
-									"SourceMapDevToolPlugin: append can't be false when no filename is provided"
-								);
-							}
 							assets[file] = compilation.assets[file] = new ConcatSource(
 								new RawSource(source),
 								currentSourceMappingURLComment

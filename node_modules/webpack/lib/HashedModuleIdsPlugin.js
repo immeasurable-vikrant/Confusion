@@ -8,18 +8,10 @@ const createHash = require("./util/createHash");
 const validateOptions = require("schema-utils");
 const schema = require("../schemas/plugins/HashedModuleIdsPlugin.json");
 
-/** @typedef {import("../declarations/plugins/HashedModuleIdsPlugin").HashedModuleIdsPluginOptions} HashedModuleIdsPluginOptions */
-
 class HashedModuleIdsPlugin {
-	/**
-	 * @param {HashedModuleIdsPluginOptions=} options options object
-	 */
 	constructor(options) {
-		if (!options) options = {};
+		validateOptions(schema, options || {}, "Hashed Module Ids Plugin");
 
-		validateOptions(schema, options, "Hashed Module Ids Plugin");
-
-		/** @type {HashedModuleIdsPluginOptions} */
 		this.options = Object.assign(
 			{
 				context: null,

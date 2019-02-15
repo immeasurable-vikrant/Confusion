@@ -32,7 +32,6 @@ class FlagDependencyExportsPlugin {
 						let module;
 						let moduleWithExports;
 						let moduleProvidedExports;
-						let providedExportsAreTemporary;
 
 						const processDependenciesBlock = depBlock => {
 							for (const dep of depBlock.dependencies) {
@@ -73,7 +72,6 @@ class FlagDependencyExportsPlugin {
 							// store dependencies
 							const exportDeps = exportDesc.dependencies;
 							if (exportDeps) {
-								providedExportsAreTemporary = true;
 								for (const exportDependency of exportDeps) {
 									// add dependency for this module
 									const set = dependencies.get(exportDependency);
@@ -98,12 +96,7 @@ class FlagDependencyExportsPlugin {
 
 						// Start with all modules without provided exports
 						for (const module of modules) {
-							if (module.buildInfo.temporaryProvidedExports) {
-								// Clear exports when they are temporary
-								// and recreate them
-								module.buildMeta.providedExports = null;
-								queue.enqueue(module);
-							} else if (!module.buildMeta.providedExports) {
+							if (!module.buildMeta.providedExports) {
 								queue.enqueue(module);
 							}
 						}
@@ -119,9 +112,7 @@ class FlagDependencyExportsPlugin {
 								)
 									? new Set(module.buildMeta.providedExports)
 									: new Set();
-								providedExportsAreTemporary = false;
 								processDependenciesBlock(module);
-								module.buildInfo.temporaryProvidedExports = providedExportsAreTemporary;
 								if (!moduleWithExports) {
 									module.buildMeta.providedExports = true;
 									notifyDependencies();

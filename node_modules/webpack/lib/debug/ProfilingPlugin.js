@@ -1,12 +1,7 @@
 const fs = require("fs");
-const path = require("path");
-const mkdirp = require("mkdirp");
 const { Tracer } = require("chrome-trace-event");
 const validateOptions = require("schema-utils");
 const schema = require("../../schemas/plugins/debug/ProfilingPlugin.json");
-
-/** @typedef {import("../../declarations/plugins/debug/ProfilingPlugin").ProfilingPluginOptions} ProfilingPluginOptions */
-
 let inspector = undefined;
 
 try {
@@ -95,10 +90,6 @@ const createTrace = outputPath => {
 		noStream: true
 	});
 	const profiler = new Profiler(inspector);
-	if (/\/|\\/.test(outputPath)) {
-		const dirPath = path.dirname(outputPath);
-		mkdirp.sync(dirPath);
-	}
 	const fsStream = fs.createWriteStream(outputPath);
 
 	let counter = 0;
@@ -154,9 +145,6 @@ const createTrace = outputPath => {
 const pluginName = "ProfilingPlugin";
 
 class ProfilingPlugin {
-	/**
-	 * @param {ProfilingPluginOptions=} opts options object
-	 */
 	constructor(opts) {
 		validateOptions(schema, opts || {}, "Profiling plugin");
 		opts = opts || {};

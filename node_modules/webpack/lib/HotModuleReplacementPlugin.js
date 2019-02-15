@@ -255,7 +255,7 @@ module.exports = class HotModuleReplacementPlugin {
 						for (const key of Object.keys(records.chunkHashs)) {
 							const chunkId = isNaN(+key) ? key : +key;
 							const currentChunk = compilation.chunks.find(
-								chunk => `${chunk.id}` === key
+								chunk => chunk.id === chunkId
 							);
 							if (currentChunk) {
 								const newModules = currentChunk

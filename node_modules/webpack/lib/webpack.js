@@ -15,13 +15,6 @@ const webpackOptionsSchema = require("../schemas/WebpackOptions.json");
 const RemovedPluginError = require("./RemovedPluginError");
 const version = require("../package.json").version;
 
-/** @typedef {import("../declarations/WebpackOptions").WebpackOptions} WebpackOptions */
-
-/**
- * @param {WebpackOptions} options options object
- * @param {function(Error=, Stats=): void=} callback callback
- * @returns {Compiler | MultiCompiler} the compiler object
- */
 const webpack = (options, callback) => {
 	const webpackOptionsValidationErrors = validateSchema(
 		webpackOptionsSchema,
@@ -41,11 +34,7 @@ const webpack = (options, callback) => {
 		new NodeEnvironmentPlugin().apply(compiler);
 		if (options.plugins && Array.isArray(options.plugins)) {
 			for (const plugin of options.plugins) {
-				if (typeof plugin === "function") {
-					plugin.call(compiler, compiler);
-				} else {
-					plugin.apply(compiler);
-				}
+				plugin.apply(compiler);
 			}
 		}
 		compiler.hooks.environment.call();

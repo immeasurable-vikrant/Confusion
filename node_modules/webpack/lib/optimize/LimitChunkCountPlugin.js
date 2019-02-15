@@ -7,17 +7,10 @@
 const validateOptions = require("schema-utils");
 const schema = require("../../schemas/plugins/optimize/LimitChunkCountPlugin.json");
 
-/** @typedef {import("../../declarations/plugins/optimize/LimitChunkCountPlugin").LimitChunkCountPluginOptions} LimitChunkCountPluginOptions */
-
 class LimitChunkCountPlugin {
-	/**
-	 * @param {LimitChunkCountPluginOptions=} options options object
-	 */
 	constructor(options) {
-		if (!options) options = {};
-
-		validateOptions(schema, options, "Limit Chunk Count Plugin");
-		this.options = options;
+		validateOptions(schema, options || {}, "Limit Chunk Count Plugin");
+		this.options = options || {};
 	}
 	apply(compiler) {
 		const options = this.options;
@@ -30,13 +23,11 @@ class LimitChunkCountPlugin {
 					if (maxChunks < 1) return;
 					if (chunks.length <= maxChunks) return;
 
-					const orderedChunks = chunks.slice().sort((a, b) => a.compareTo(b));
-
-					const sortedExtendedPairCombinations = orderedChunks
+					const sortedExtendedPairCombinations = chunks
 						.reduce((combinations, a, idx) => {
 							// create combination pairs
 							for (let i = 0; i < idx; i++) {
-								const b = orderedChunks[i];
+								const b = chunks[i];
 								combinations.push([b, a]);
 							}
 							return combinations;
@@ -56,13 +47,9 @@ class LimitChunkCountPlugin {
 						.sort((a, b) => {
 							// sadly javascript does an inplace sort here
 							// sort them by size
-							const diff1 = b[0] - a[0];
-							if (diff1 !== 0) return diff1;
-							const diff2 = a[1] - b[1];
-							if (diff2 !== 0) return diff2;
-							const diff3 = a[2].compareTo(b[2]);
-							if (diff3 !== 0) return diff3;
-							return a[3].compareTo(b[3]);
+							const diff = b[0] - a[0];
+							if (diff !== 0) return diff;
+							return a[1] - b[1];
 						});
 
 					const pair = sortedExtendedPairCombinations[0];

@@ -127,14 +127,13 @@ class ExternalModule extends Module {
 				);
 			case "global":
 				return this.getSourceForGlobalVariableExternal(
-					request,
-					runtime.outputOptions.globalObject
+					runtime.outputOptions.globalObject,
+					this.externalType
 				);
 			case "commonjs":
 			case "commonjs2":
 				return this.getSourceForCommonJsExternal(request);
 			case "amd":
-			case "amd-require":
 			case "umd":
 			case "umd2":
 				return this.getSourceForAmdOrUmdExternal(

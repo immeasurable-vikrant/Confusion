@@ -21,15 +21,11 @@ class RuntimeValue {
 	}
 
 	exec(parser) {
-		if (this.fileDependencies === true) {
-			parser.state.module.buildInfo.cacheable = false;
-		} else {
-			for (const fileDependency of this.fileDependencies) {
-				parser.state.module.buildInfo.fileDependencies.add(fileDependency);
-			}
+		for (const fileDependency of this.fileDependencies) {
+			parser.state.module.buildInfo.fileDependencies.add(fileDependency);
 		}
 
-		return this.fn({ module: parser.state.module });
+		return this.fn();
 	}
 }
 

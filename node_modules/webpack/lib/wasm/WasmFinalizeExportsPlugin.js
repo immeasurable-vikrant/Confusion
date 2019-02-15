@@ -30,8 +30,6 @@ class WasmFinalizeExportsPlugin {
 										reason.dependency
 									);
 
-									if (!ref) continue;
-
 									const importedNames = ref.importedNames;
 
 									if (Array.isArray(importedNames)) {

@@ -50,6 +50,7 @@ class Watching {
 				this.compiler.emitAssets(compilation, err => {
 					if (err) return this._done(err);
 					if (this.invalid) return this._done();
+
 					this.compiler.emitRecords(err => {
 						if (err) return this._done(err);
 
@@ -94,6 +95,7 @@ class Watching {
 			this.handler(err, stats);
 			return;
 		}
+
 		this.compiler.hooks.done.callAsync(stats, () => {
 			this.handler(null, stats);
 			if (!this.closed) {
@@ -122,8 +124,7 @@ class Watching {
 				contextModified,
 				missingModified,
 				fileTimestamps,
-				contextTimestamps,
-				removedFiles
+				contextTimestamps
 			) => {
 				this.pausedWatcher = this.watcher;
 				this.watcher = null;
@@ -132,7 +133,6 @@ class Watching {
 				}
 				this.compiler.fileTimestamps = fileTimestamps;
 				this.compiler.contextTimestamps = contextTimestamps;
-				this.compiler.removedFiles = removedFiles;
 				this._invalidate();
 			},
 			(fileName, changeTime) => {
@@ -170,7 +170,6 @@ class Watching {
 		const finalCallback = () => {
 			this.compiler.hooks.watchClose.call();
 			this.compiler.running = false;
-			this.compiler.watchMode = false;
 			if (callback !== undefined) callback();
 		};
 

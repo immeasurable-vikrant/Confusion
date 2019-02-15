@@ -12,9 +12,6 @@ const Template = require("./Template");
 const validateOptions = require("schema-utils");
 const schema = require("../schemas/plugins/BannerPlugin.json");
 
-/** @typedef {import("../declarations/plugins/BannerPlugin").BannerPluginArgument} BannerPluginArgument */
-/** @typedef {import("../declarations/plugins/BannerPlugin").BannerPluginOptions} BannerPluginOptions */
-
 const wrapComment = str => {
 	if (!str.includes("\n")) {
 		return Template.toComment(str);
@@ -26,9 +23,6 @@ const wrapComment = str => {
 };
 
 class BannerPlugin {
-	/**
-	 * @param {BannerPluginArgument} options options object
-	 */
 	constructor(options) {
 		if (arguments.length > 1) {
 			throw new Error(
@@ -44,19 +38,17 @@ class BannerPlugin {
 			};
 		}
 
-		/** @type {BannerPluginOptions} */
-		this.options = options;
+		this.options = options || {};
 
-		const bannerOption = options.banner;
-		if (typeof bannerOption === "function") {
-			const getBanner = bannerOption;
+		if (typeof options.banner === "function") {
+			const getBanner = this.options.banner;
 			this.banner = this.options.raw
 				? getBanner
 				: data => wrapComment(getBanner(data));
 		} else {
 			const banner = this.options.raw
-				? bannerOption
-				: wrapComment(bannerOption);
+				? this.options.banner
+				: wrapComment(this.options.banner);
 			this.banner = () => banner;
 		}
 	}
