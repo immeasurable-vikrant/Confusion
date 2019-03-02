@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardImg, CardBody, CardText, CardTitle, Breadcrumb,BreadcrumbItem } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Card, CardImg, CardBody, CardText, CardTitle } from 'reactstrap';
 class Dishdetail extends Component {
 
     renderComments(comments) {
