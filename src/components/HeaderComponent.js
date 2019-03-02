@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand,Nav, NavbarToggler, Collapse, NavItem, Jumbotron, Modal,Button,ModalBody,ModalHeader} from 'reactstrap';
+import { Navbar, NavbarBrand,Nav, NavbarToggler, Collapse, NavItem, Jumbotron, Modal,Button,ModalBody,ModalHeader,Form,FormFeedback,FormGroup,FormText,Label} from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 
 class Header extends Component {
@@ -60,6 +60,13 @@ class Header extends Component {
                             </NavLink>
                         </NavItem>
                         </Nav>
+                        <Nav className="ml-auto" navbar>
+                            <NavItem>
+                            <Button outline onClick={this.toggleModal}>
+                            <span className="fa fa-sign-in fa-lg"></span>Login
+                            </Button>
+                            </NavItem>
+                        </Nav>
 
                             </Collapse>
                     </div>
@@ -75,10 +82,29 @@ class Header extends Component {
                         </div>
                         </div>
                     </Jumbotron>
-                    <Modal>
-                        <ModalHeader>Login</ModalHeader>
+                    <Modal isOpen ={this.state.isModalOpen} toggle={this.toggleModal}>
+                        <ModalHeader toggle={this.toggleModal}>Login</ModalHeader>
                         <ModalBody>
-
+                        <Form onSubmit={this.handleLogin}>
+                        <FormGroup>
+                            <Label htmlFor="username"> Username</Label>
+                            <Input type="text" id="username" name="username" />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label htmlFor="password"> Password</Label>
+                            <Input type="password" id="password" name="password" />
+                        </FormGroup>
+                        <FormGroup>
+                            <Label htmlFor="password"> Password</Label>
+                            <Input type="password" id="password" name="password" />
+                            </FormGroup>
+                        <FormGroup check>
+                                <Label check>
+                                <Input type="checkbox" name="remember" />
+                                Remember me
+                                </Label>
+                        </FormGroup>
+                        </Form>
                         </ModalBody>
                     </Modal>
             </React.Fragment>
