@@ -52,11 +52,6 @@ class Header extends Component {
                         </NavItem>
                         </Nav>
 
-                        <NavItem>
-                        <Button className="float-right" onClick={this.open}>Login</Button>
-                       
-                        </NavItem>
-
                             </Collapse>
                     </div>
                 </Navbar>
