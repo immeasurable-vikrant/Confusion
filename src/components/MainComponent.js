@@ -3,11 +3,12 @@ import Home from './HomeComponent';
 import Menu from './MenuComponent';
 import Contact from './ContactComponent';
 import DishDetail from './DishdetailComponent';
+import SignIn from '../authenticate/SignInComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import { DISHES } from '../shared/dishes';
-import { COMMENTS } from '../shared/comments';
-import { LEADERS } from '../shared/leaders';
+import { COMMENTS } from '../shared/comments';	
+																																																																																																																																																																																																																																																																																																																																																		import { LEADERS } from '../shared/leaders';
 import { PROMOTIONS } from '../shared/promotions';
 import { Switch, Route, Redirect} from 'react-router-dom';
 
@@ -40,6 +41,7 @@ class Main extends Component {
             <Route path="/home" component={HomePage} />
             <Route exact path="/menu" component= {() => <Menu dishes={this.state.dishes} />} />
             <Route exact path="/contactus" component={Contact} />} />
+            <Route path ="/sigin" component= {SignIn} />
             <Redirect to="/home" />
           </Switch>
         <Footer />

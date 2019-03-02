@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand,Nav, NavbarToggler, Collapse, NavItem, Jumbotron } from 'reactstrap';
+import { Navbar, NavbarBrand,Nav, NavbarToggler, Collapse, NavItem, Jumbotron, Button} from 'reactstrap';
 import { NavLink } from 'react-router-dom';
 
 class Header extends Component {
@@ -51,6 +51,12 @@ class Header extends Component {
                             </NavLink>
                         </NavItem>
                         </Nav>
+
+                        <NavItem>
+                        <Button className="float-right" onClick={this.open}>Login</Button>
+                       
+                        </NavItem>
+
                             </Collapse>
                     </div>
                 </Navbar>
