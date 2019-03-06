@@ -1,45 +1,19 @@
 import React, { Component } from 'react';
-import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup,Input,Label, Col,FormFeedback } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Button,Input,Label, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Control, LocalForm, Errors } from 'react-redux-form';
 
 class Contact extends Component {
 
 
     constructor(props) {
         super(props);
-
-        this.state ={
-            firstname: '',
-            lastname: '',
-            telnum: '',
-            email: '',
-            agree: false,
-            contactType: 'Tel.',
-            message:'',
-            touched: {
-                firstname: false,
-                lastname: false,
-                telnum: false,
-                email: false
-            }
-        }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
 
     }
-
-    handleInputChange(event) {
-        const target =event.target;
-        const value =target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-
-        this.setState({
-            [name] : value
-        });
     
-    }
-
     handleSubmit(event) {
         console.log("Current State is : " + JSON.stringify(this.state));
         alert("Current State is : " + JSON.stringify(this.state));
