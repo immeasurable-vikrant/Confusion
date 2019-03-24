@@ -14,7 +14,10 @@ export const ConfigureStore = () => {
             promotions: Promotions,
             comments: Comments,
             leaders: Leaders
-        })
-     );
+        }),
+        applyMiddleware(thunk, logger)
+    );
+
+
     return store;  
 }
