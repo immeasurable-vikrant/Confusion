@@ -5,7 +5,7 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody,
 import { Link } from 'react-router-dom';
 import { Control, LocalForm } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
-import { baseUrl } from '../shared/baseUrl';
+
 import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
     function RenderDish({dish, favorite, postFavorite}) {
@@ -16,7 +16,7 @@ import { FadeTransform, Fade, Stagger } from 'react-animation-components';
                             exitTransform: 'scale(0.5) translateY(-50%)'
                         }}>
                         <Card>
-                            <CardImg top src={baseUrl + dish.image} alt={dish.name} />
+                            <CardImg top src={ dish.image} alt={dish.name} />
                             <CardImgOverlay>
                                 <Button outline color="primary" onClick={() => favorite ? console.log('Already favorite') : postFavorite(dish._id)}>
                                     {favorite ?
@@ -37,7 +37,7 @@ import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
     }
 
-    function RenderComments({comments, addComment, dishId}) {
+    function RenderComments({comments, postComment, dishId}) {
         if (comments != null)
             return(
                 <div className="col-12 col-md-5 m-1">
@@ -57,7 +57,7 @@ import { FadeTransform, Fade, Stagger } from 'react-animation-components';
                             })}
                         </Stagger>
                     </ul>
-                    <CommentForm dishId={dishId} addComment={addComment} />
+                    <CommentForm dishId={dishId} postComment={postComment} />
                 </div>
             );
         else
@@ -88,7 +88,7 @@ import { FadeTransform, Fade, Stagger } from 'react-animation-components';
     
         handleSubmit(values) {
             this.toggleModal();
-            this.props.addComment(this.props.dishId, values.rating, values.author ,values.comment);
+            this.props.postComment(this.props.dishId, values.rating, values.comment);
         }
     
         render() {
@@ -165,8 +165,8 @@ import { FadeTransform, Fade, Stagger } from 'react-animation-components';
                     <div className="row">
                         <RenderDish dish={props.dish} favorite={props.favorite} postFavorite={props.postFavorite} />
                         <RenderComments comments={props.comments}
-                            addComment={props.addComment}
-                            dishId={props.dish.id} />
+                            postComment={props.postComment}
+                            dishId={props.dish._id} />
                     </div>
                 </div>
             );
